@@ -18,6 +18,10 @@ public:
 private slots:
   void on_CodeText_textChanged();
 
+  void on_radioButton_2_clicked();
+
+  void on_spinBox_valueChanged(int arg1);
+
 private:
   Ui::Widget *ui;
   QString decode(QString str, int depos);
