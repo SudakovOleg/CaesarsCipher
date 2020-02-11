@@ -2,6 +2,7 @@
 #include "ui_widget.h"
 #include "abcrus.h"
 #include "hack.h"
+#include "fhack.h"
 
 Widget::Widget(QWidget *parent) :
   QWidget(parent),

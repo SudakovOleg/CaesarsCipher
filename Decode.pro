@@ -26,12 +26,14 @@ CONFIG += c++11
 
 SOURCES += \
         abcrus.cpp \
+        fhack.cpp \
         hack.cpp \
         main.cpp \
         widget.cpp
 
 HEADERS += \
         abcrus.h \
+        fhack.h \
         hack.h \
         widget.h
 
