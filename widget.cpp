@@ -7,6 +7,8 @@ Widget::Widget(QWidget *parent) :
   ui(new Ui::Widget)
 {
   ui->setupUi(this);
+  ui->CodeRB->setChecked(true);
+  ui->spinBox->setRange(-33,33);
 }
 
 Widget::~Widget()
@@ -31,12 +33,6 @@ QString Widget::decode(QString str, int depos)
                              (abc.getChar(str[i]) + depos));
   }
   return str;
-}
-
-void Widget::on_radioButton_2_clicked()
-{
-    ui->spinBox->setEnabled(true);
-    ui->DecodeText->setEnabled(true);
 }
 
 void Widget::on_spinBox_valueChanged(int arg1)
