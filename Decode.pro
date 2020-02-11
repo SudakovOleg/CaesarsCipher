@@ -25,10 +25,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        abcrus.cpp \
         main.cpp \
         widget.cpp
 
 HEADERS += \
+        abcrus.h \
         widget.h
 
 FORMS += \
