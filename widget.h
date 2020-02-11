@@ -19,6 +19,10 @@ private slots:
   void on_CodeText_textChanged();
   void on_spinBox_valueChanged(int arg1);
 
+  void on_HackRB_clicked();
+
+  void on_CodeRB_clicked();
+
 private:
   Ui::Widget *ui;
   QString decode(QString str, int depos);

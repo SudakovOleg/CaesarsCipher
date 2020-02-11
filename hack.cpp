@@ -22,6 +22,11 @@ bool Hack::isWords(QString str)
         gl = 0;
       }
     }
+    else
+    {
+      sg = 0;
+      gl = 0;
+    }
     if(sg > 3 || gl > 3)
       return false;
   }
