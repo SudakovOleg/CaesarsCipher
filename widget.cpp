@@ -4,6 +4,7 @@
 #include "hack.h"
 #include "fhack.h"
 
+//Конструктор
 Widget::Widget(QWidget *parent) :
   QWidget(parent),
   ui(new Ui::Widget)
@@ -14,26 +15,33 @@ Widget::Widget(QWidget *parent) :
   ui->pushButton->setVisible(false);
 }
 
+//Деструктор
 Widget::~Widget()
 {
   delete ui;
 }
 
+//Слот реагирования на изменения текста
 void Widget::on_CodeText_textChanged()
 {
+  //Если активна радиокнопка шифровки/дешифровки
   if(ui->CodeRB->isChecked())
   {
     QString str = decode(ui->CodeText->toPlainText(), ui->spinBox->value());
     ui->DecodeText->setText(str);
   }
+  //Если активна радиокнопка взлома
   else if(ui->HackRB->isChecked())
   {
     Hack hack;
     QString res = "Have not answer";
-    for(int i(ui->spinBox->value()+1); i < 33; i++)
+    for(int i(nowkey+1); i < 33; i++)
     {
-      ui->spinBox->setValue(i);
+      //Запоминаем позицию
+      nowkey = i;
+      //Декодируем на заданное смещение
       QString str = decode(ui->CodeText->toPlainText(), i);
+      //Проверяем смысловую нагрузку, если есть выходим
       if(hack.isWords(str))
       {
         QString key;
@@ -42,11 +50,14 @@ void Widget::on_CodeText_textChanged()
         break;
       }
     }
+    //Выводим результат
     ui->DecodeText->setText(res);
   }
+  //Если активна радиокнопка частотного взлома
   else
   {
     FHack hack;
+    //Считаем смещение для самого частовстречаемого символа в русском языке и выводим текст
     QString str = decode(ui->CodeText->toPlainText(), hack.hack(ui->CodeText->toPlainText()));
     QString key;
     key.setNum(hack.hack(ui->CodeText->toPlainText()));
@@ -54,6 +65,7 @@ void Widget::on_CodeText_textChanged()
   }
 }
 
+//Метод дешифровки
 QString Widget::decode(QString str, int depos)
 {
   AbcRus abc;
@@ -66,6 +78,7 @@ QString Widget::decode(QString str, int depos)
   return str;
 }
 
+//Слот реакции на изменение спинбокса
 void Widget::on_spinBox_valueChanged(int arg1)
 {
   Q_UNUSED(arg1);
@@ -73,26 +86,39 @@ void Widget::on_spinBox_valueChanged(int arg1)
     on_CodeText_textChanged();
 }
 
+//Слот реакции на нажатие кнопки взлома
 void Widget::on_HackRB_clicked()
 {
   ui->CodeRB->setChecked(false);
   ui->spinBox->setEnabled(false);
-  ui->DecodeText->setEnabled(false);
+   ui->DecodeText->setReadOnly(true);
   ui->pushButton->setVisible(true);
   ui->spinBox->setValue(0);
 }
 
+//Слот реакции на нажатие кнопки шифрования
 void Widget::on_CodeRB_clicked()
 {
   ui->CodeRB->setChecked(true);
   ui->spinBox->setEnabled(true);
-  ui->DecodeText->setEnabled(true);
+   ui->DecodeText->setReadOnly(false);
   ui->pushButton->setVisible(false);
 }
 
+//Слот реакции на нажатие кнопки перехода к следующему
+//варианту дишифровки
 void Widget::on_pushButton_clicked()
 {
-  if(ui->spinBox->value() == 33)
-    ui->spinBox->setValue(0);
+  if(nowkey > 31)
+    nowkey = 0;
   on_CodeText_textChanged();
+}
+
+//Слот реакции на нажатие кнопки частотного взлома
+void Widget::on_FHackRB_clicked()
+{
+  ui->CodeRB->setChecked(false);
+  ui->spinBox->setEnabled(false);
+  ui->DecodeText->setReadOnly(true);
+  ui->spinBox->setValue(0);
 }

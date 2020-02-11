@@ -18,16 +18,16 @@ public:
 private slots:
   void on_CodeText_textChanged();
   void on_spinBox_valueChanged(int arg1);
-
   void on_HackRB_clicked();
-
   void on_CodeRB_clicked();
-
   void on_pushButton_clicked();
+
+  void on_FHackRB_clicked();
 
 private:
   Ui::Widget *ui;
   QString decode(QString str, int depos);
+  int nowkey = 0;
 };
 
 #endif // WIDGET_H
