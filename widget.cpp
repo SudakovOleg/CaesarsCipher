@@ -26,7 +26,9 @@ QString Widget::decode(QString str, int depos)
   for(int i(0); i < str.count(); i++)
   {
     if(!(str[i] == ' ' || str[i] == '\n'))
-      str[i] = abc.getChar(abc.getChar(str[i]) + depos);
+      str[i] = abc.getChar((abc.getChar(str[i]) + depos) > 32?
+                             (abc.getChar(str[i]) + depos) - 33 :
+                             (abc.getChar(str[i]) + depos));
   }
   return str;
 }
