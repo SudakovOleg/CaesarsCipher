@@ -19,9 +19,8 @@ private slots:
   void on_CodeText_textChanged();
 
 private:
-  QString decode(QString str);
-  QChar abc(int i, QChar ch);
   Ui::Widget *ui;
+  QString decode(QString str, int depos);
 };
 
 #endif // WIDGET_H

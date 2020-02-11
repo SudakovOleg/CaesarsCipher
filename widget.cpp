@@ -16,33 +16,17 @@ Widget::~Widget()
 
 void Widget::on_CodeText_textChanged()
 {
-    QString str = decode(ui->CodeText->toPlainText());
+    QString str = decode(ui->CodeText->toPlainText(), 1);
     ui->DecodeText->setText(str);
 }
 
-QString Widget::decode(QString str)
+QString Widget::decode(QString str, int depos)
 {
+  AbcRus abc;
   for(int i(0); i < str.count(); i++)
   {
     if(!(str[i] == ' ' || str[i] == '\n'))
-      str[i] = abc(1, str[i]);
+      str[i] = abc.getChar(abc.getChar(str[i]) + depos);
   }
   return str;
-}
-
-QChar Widget::abc(int i, QChar ch)
-{
-  QString abc = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
-  int ni = 0;
-  for(auto chr : abc)
-    if(chr == ch)
-    {
-      ni += i;
-      if(ni > 32)
-        ni -= 33;
-      break;
-    }
-    else
-      ni++;
-  return abc[ni];
 }
