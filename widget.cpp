@@ -8,7 +8,7 @@ Widget::Widget(QWidget *parent) :
 {
   ui->setupUi(this);
   ui->CodeRB->setChecked(true);
-  ui->spinBox->setRange(-33,33);
+  ui->spinBox->setRange(0,33);
 }
 
 Widget::~Widget()
@@ -28,9 +28,7 @@ QString Widget::decode(QString str, int depos)
   for(int i(0); i < str.count(); i++)
   {
     if(!(str[i] == ' ' || str[i] == '\n'))
-      str[i] = abc.getChar((abc.getChar(str[i]) + depos) > 32?
-                             (abc.getChar(str[i]) + depos) - 33 :
-                             (abc.getChar(str[i]) + depos));
+      str[i] = abc.getChar(abc.getChar(str[i]) + depos);
   }
   return str;
 }
