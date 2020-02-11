@@ -31,6 +31,13 @@
       <item>
        <widget class="QTextEdit" name="DecodeText"/>
       </item>
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>Следующий вариант</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item row="0" column="2">

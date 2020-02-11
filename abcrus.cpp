@@ -5,7 +5,9 @@ AbcRus::AbcRus()
 
 QChar AbcRus::getChar(int i)
 {
-    return abc[i%33];
+  if(i < 0)
+    return '!';
+  return abc[i%33];
 }
 
 int AbcRus::getChar(QChar ch)
@@ -21,4 +23,5 @@ int AbcRus::getChar(QChar ch)
     {
       i++;
     }
+  return -100;
 }

@@ -23,6 +23,8 @@ private slots:
 
   void on_CodeRB_clicked();
 
+  void on_pushButton_clicked();
+
 private:
   Ui::Widget *ui;
   QString decode(QString str, int depos);

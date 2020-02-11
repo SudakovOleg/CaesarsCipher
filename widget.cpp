@@ -10,6 +10,7 @@ Widget::Widget(QWidget *parent) :
   ui->setupUi(this);
   ui->CodeRB->setChecked(true);
   ui->spinBox->setRange(0,33);
+  ui->pushButton->setVisible(false);
 }
 
 Widget::~Widget()
@@ -28,8 +29,9 @@ void Widget::on_CodeText_textChanged()
   {
     Hack hack;
     QString res = "Have not answer";
-    for(int i(0); i < 33; i++)
+    for(int i(ui->spinBox->value()+1); i < 33; i++)
     {
+      ui->spinBox->setValue(i);
       QString str = decode(ui->CodeText->toPlainText(), i);
       if(hack.isWords(str))
       {
@@ -46,6 +48,7 @@ void Widget::on_CodeText_textChanged()
 QString Widget::decode(QString str, int depos)
 {
   AbcRus abc;
+  str = str.toLower();
   for(int i(0); i < str.count(); i++)
   {
     if(!(str[i] == ' ' || str[i] == '\n'))
@@ -57,7 +60,8 @@ QString Widget::decode(QString str, int depos)
 void Widget::on_spinBox_valueChanged(int arg1)
 {
   Q_UNUSED(arg1);
-  on_CodeText_textChanged();
+  if(ui->CodeRB->isChecked())
+    on_CodeText_textChanged();
 }
 
 void Widget::on_HackRB_clicked()
@@ -65,6 +69,8 @@ void Widget::on_HackRB_clicked()
   ui->CodeRB->setChecked(false);
   ui->spinBox->setEnabled(false);
   ui->DecodeText->setEnabled(false);
+  ui->pushButton->setVisible(true);
+  ui->spinBox->setValue(0);
 }
 
 void Widget::on_CodeRB_clicked()
@@ -72,4 +78,12 @@ void Widget::on_CodeRB_clicked()
   ui->CodeRB->setChecked(true);
   ui->spinBox->setEnabled(true);
   ui->DecodeText->setEnabled(true);
+  ui->pushButton->setVisible(false);
+}
+
+void Widget::on_pushButton_clicked()
+{
+  if(ui->spinBox->value() == 33)
+    ui->spinBox->setValue(0);
+  on_CodeText_textChanged();
 }

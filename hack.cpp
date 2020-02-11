@@ -27,7 +27,7 @@ bool Hack::isWords(QString str)
       sg = 0;
       gl = 0;
     }
-    if(sg > 3 || gl > 3)
+    if(sg > 3 || gl > 2)
       return false;
   }
   return true;
