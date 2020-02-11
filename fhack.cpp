@@ -1,30 +1,39 @@
 #include "fhack.h"
 #include <QList>
+#include "abcrus.h"
 
 FHack::FHack()
 = default;
+
+int FHack::hack(QString str)
+{
+  return findKey(findCh(str));
+}
 
 QChar FHack::findCh(QString str)
 {
   QList<chrCount> *chrs = new QList<chrCount>;
   for(auto ch : str)
   {
-    bool flag = false;
-    for(auto &ch_fromList : *chrs)
+    if(!(ch == ' ' || ch == '\n'))
     {
-      if(ch == ch_fromList.ch)
+      bool flag = false;
+      for(auto &ch_fromList : *chrs)
       {
-        flag = true;
-        ch_fromList.count++;
-        break;
+        if(ch == ch_fromList.ch)
+        {
+          flag = true;
+          ch_fromList.count++;
+          break;
+        }
       }
-    }
-    if(!flag)
-    {
-      chrCount nChr;
-      nChr.ch = ch;
-      nChr.count++;
-      chrs->push_back(nChr);
+      if(!flag)
+      {
+        chrCount nChr;
+        nChr.ch = ch;
+        nChr.count++;
+        chrs->push_back(nChr);
+      }
     }
   }
   int max = 0;
@@ -38,4 +47,11 @@ QChar FHack::findCh(QString str)
     }
   }
   return res;
+}
+
+int FHack::findKey(QChar ch)
+{
+  AbcRus abc;
+  int res = mostPopular - abc.getChar(ch);
+  return res < 0 ? res + 33: res;
 }

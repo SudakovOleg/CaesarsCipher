@@ -15,8 +15,9 @@ public:
   FHack();
   int hack(QString str);
 private:
+  int mostPopular = 0;
   QChar findCh(QString str);
-  int findKey();
+  int findKey(QChar ch);
 };
 
 #endif // FHACK_H

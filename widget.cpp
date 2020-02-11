@@ -26,7 +26,7 @@ void Widget::on_CodeText_textChanged()
     QString str = decode(ui->CodeText->toPlainText(), ui->spinBox->value());
     ui->DecodeText->setText(str);
   }
-  else
+  else if(ui->HackRB->isChecked())
   {
     Hack hack;
     QString res = "Have not answer";
@@ -43,6 +43,14 @@ void Widget::on_CodeText_textChanged()
       }
     }
     ui->DecodeText->setText(res);
+  }
+  else
+  {
+    FHack hack;
+    QString str = decode(ui->CodeText->toPlainText(), hack.hack(ui->CodeText->toPlainText()));
+    QString key;
+    key.setNum(hack.hack(ui->CodeText->toPlainText()));
+    ui->DecodeText->setText(str + "\nKey: " + key);
   }
 }
 
